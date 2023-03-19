@@ -44,26 +44,35 @@ func myWrite(answer bool) {
 }
 
 func isQueueInFormat(queue []int) bool {
-	var isIncrease bool
-	pre := queue[0]
-	newStart := 0
-	for i, v := range queue[1:] {
-		if pre != v {
-			if v > pre {
-				isIncrease = true
-			} else {
-				isIncrease = false
-			}
-			newStart = i
-			break
-		}
+	if (queue[0] <= queue[1] && queue[1] <= queue[2] && queue[2] <= queue[3]) || (queue[0] >= queue[1] && queue[1] >= queue[2] && queue[2] >= queue[3]) {
+		return true
+	} else {
+		return false
 	}
-	for i, v := range queue[newStart+1:] {
-		if v != queue[i-1] && ((v > queue[i-1]) != isIncrease) {
-			return false
-		}
-	}
-	return true
+
+	//if len(queue) <= 2 {
+	//	return true
+	//}
+	//var isIncrease bool
+	//pre := queue[0]
+	//newStart := 1
+	//for i, v := range queue[1:] {
+	//	if pre != v {
+	//		if v > pre {
+	//			isIncrease = true
+	//		} else {
+	//			isIncrease = false
+	//		}
+	//		newStart = i
+	//		break
+	//	}
+	//}
+	//for i := newStart + 1; i < len(queue); i++ {
+	//	if queue[i] != queue[i-1] && ((queue[i] > queue[i-1]) != isIncrease) {
+	//		return false
+	//	}
+	//}
+	//return true
 }
 
 func main() {
