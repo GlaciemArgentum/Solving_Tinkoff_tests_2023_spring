@@ -12,11 +12,13 @@ func myRead(name string) (int, []int) {
 	var buf *bufio.Scanner
 	if name == "" {
 		file, _ := os.Open("input.txt")
+		defer file.Close()
 		buf = bufio.NewScanner(file)
 	} else if name == "std" {
 		buf = bufio.NewScanner(os.Stdin)
 	} else {
 		file, _ := os.Open(name + ".txt")
+		defer file.Close()
 		buf = bufio.NewScanner(file)
 	}
 
@@ -34,8 +36,6 @@ func myRead(name string) (int, []int) {
 }
 
 func myWrite(answer int) {
-	//file, _ := os.Create("output.txt")
-	//_, _ = file.WriteString(fmt.Sprintf("%d\n", answer))
 	fmt.Println(answer)
 }
 
