@@ -12,11 +12,13 @@ func myRead(name string) []int {
 	var buf *bufio.Scanner
 	if name == "" {
 		file, _ := os.Open("input.txt")
+		defer file.Close()
 		buf = bufio.NewScanner(file)
 	} else if name == "std" {
 		buf = bufio.NewScanner(os.Stdin)
 	} else {
 		file, _ := os.Open(name + ".txt")
+		defer file.Close()
 		buf = bufio.NewScanner(file)
 	}
 
@@ -32,12 +34,9 @@ func myRead(name string) []int {
 }
 
 func myWrite(answer bool) {
-	//file, _ := os.Create("output.txt")
 	if answer {
-		//_, _ = file.WriteString("YES")
 		fmt.Println("YES")
 	} else {
-		//_, _ = file.WriteString("NO")
 		fmt.Println("NO")
 	}
 
@@ -49,30 +48,6 @@ func isQueueInFormat(queue []int) bool {
 	} else {
 		return false
 	}
-
-	//if len(queue) <= 2 {
-	//	return true
-	//}
-	//var isIncrease bool
-	//pre := queue[0]
-	//newStart := 1
-	//for i, v := range queue[1:] {
-	//	if pre != v {
-	//		if v > pre {
-	//			isIncrease = true
-	//		} else {
-	//			isIncrease = false
-	//		}
-	//		newStart = i
-	//		break
-	//	}
-	//}
-	//for i := newStart + 1; i < len(queue); i++ {
-	//	if queue[i] != queue[i-1] && ((queue[i] > queue[i-1]) != isIncrease) {
-	//		return false
-	//	}
-	//}
-	//return true
 }
 
 func main() {
