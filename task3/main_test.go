@@ -1,7 +1,9 @@
 package main
 
 import (
-	"fmt"
+	cryptoRand "crypto/rand"
+	"encoding/binary"
+	mathRand "math/rand"
 	"testing"
 )
 
@@ -29,10 +31,71 @@ var tests = []Test{
 	{12, []byte("aaaaaaaaaaaa"), -1},
 }
 
+func myInit() int64 {
+	var b [8]byte
+	_, err := cryptoRand.Read(b[:])
+	if err != nil {
+		panic("cannot seed math/rand package with cryptographically secure random number generator")
+	}
+	return int64(binary.LittleEndian.Uint64(b[:]))
+}
+
+func Generate(k int) []byte {
+	mathRand.Seed(myInit())
+
+	str := make([]byte, 0, k)
+	for i := 0; i < k; i++ {
+		str = append(str, uint8(mathRand.Intn(3)+97))
+	}
+	return str
+}
+
 func TestFunc(t *testing.T) {
-	for i, test := range tests {
-		if res := minLenString(test.n, test.s); res != test.res {
-			t.Error(fmt.Sprintf("Test %d: expected %d, got %d", i+1, test.res, res))
+	n := 100
+	k := 500
+	for i := 0; i < n; i++ {
+		str := Generate(k)
+		if minLenString(k, str) != slowMinLenString(k, str) {
+			t.Error("Error")
 		}
+	}
+}
+
+func slowMinLenString(n int, data []byte) int {
+	min := 200_001
+	for l := 0; l < n-1; l++ {
+		for r := l + 1; r < n; r++ {
+			if min > (r-l+1) && isHereEverySymbol(data[l:r+1]) {
+				min = r - l + 1
+			}
+		}
+	}
+	if min == 200_001 {
+		return -1
+	} else {
+		return min
+	}
+}
+
+func isHereEverySymbol(data []byte) bool {
+	var a, b, c, d int
+	for _, v := range data {
+		if v == byte('a') {
+			a++
+		}
+		if v == byte('b') {
+			b++
+		}
+		if v == byte('c') {
+			c++
+		}
+		if v == byte('d') {
+			d++
+		}
+	}
+	if a*b*c*d == 0 {
+		return false
+	} else {
+		return true
 	}
 }
