@@ -22,6 +22,8 @@ var tests = []Test{
 	{[]int{4, 4, 4, 4}, true},
 	{[]int{4, 4, 4, 1}, true},
 	{[]int{1, 1, 1, 4}, true},
+	{[]int{1, 1, 4, 4}, true},
+	{[]int{4, 4, 1, 1}, true},
 	{[]int{1, 2, 3, 2}, false},
 	{[]int{4, 3, 2, 5}, false},
 }
