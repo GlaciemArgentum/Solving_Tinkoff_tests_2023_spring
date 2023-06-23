@@ -45,6 +45,10 @@ func countNormSegment(n int, data []int) int {
 		flag          bool
 	)
 
+	if n == 1 && data[0] == 0 {
+		return 1
+	}
+
 	for left := 0; left < n-1; left++ {
 		sum := data[left]
 		for right := left + 1; right < n; right++ {
